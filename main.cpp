@@ -329,7 +329,7 @@ void wyswietlOsobyOTymSamymNazwisku(vector<Adresat> &adresaci, int liczbaAdresat
 
 int ustalMAxId()
 {
-    string linia;
+    string linia,linia2;
 
     int maxId=0;
 
@@ -344,7 +344,10 @@ int ustalMAxId()
 
     while(getline(plik,linia))
     {
+        linia2=linia;
     }
+
+    linia=linia2;
 
     string temp="";
     int i=0;
