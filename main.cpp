@@ -451,7 +451,8 @@ void del_line(const char *file_name, int id)
 
         idLini = atoi(idStr.c_str());
 
-        if(idLini != id) fout<<linia<<endl;
+        if(idLini != id)
+            fout<<linia<<endl;
     }
 
     fout.close();
@@ -474,7 +475,7 @@ int usunAdresata(vector<Adresat> &adresaci, int iloscOsob)
 
     vector<Adresat>::iterator it;
     for (it = adresaci.begin(); it != adresaci.end(); ++it)
-        if ((*it).idAdresata == id)
+        if ((*it).idAdresata == id )
         {
             cout << "Czy na pewno usunac osobe (t/n)?" << endl;
             cin >> wybor;
@@ -484,12 +485,14 @@ int usunAdresata(vector<Adresat> &adresaci, int iloscOsob)
                 it--;
                 cout << "Osoba zostala usunieta." << endl;
                 Sleep(1000);
+                del_line("Adresaci.txt",id);
+                return --iloscOsob;
             }
+
         }
-    del_line("Adresaci.txt",id);
 
-
-    return --iloscOsob;
+    cout << "Adresat nie nalezy do zalogownego uzytkownika lub nie ma osoby o podanym id" << endl;
+    Sleep(2000);
 }
 
 void aktualizacjaPliku(const char *file_name,int id,Adresat edytowanyAdresat, int iloscOsob)
@@ -542,11 +545,12 @@ void edytujAdresata(vector<Adresat> &adresaci,int iloscOsob)
 {
     int wybor;
     int id;
+    bool zmiana=false;
     Adresat edytowanyAdresat;
     string imie, nazwisko, numerTelefonu, email, adres;
 
     system("cls");
-    cout << "Podaj id adresata ktorego chcesz eydotwac " << endl;
+    cout << "Podaj id adresata ktorego chcesz edytowac " << endl;
     cin >> id;
 
     system("cls");
@@ -581,6 +585,7 @@ void edytujAdresata(vector<Adresat> &adresaci,int iloscOsob)
                 edytowanyAdresat.email = (*it).email;
                 edytowanyAdresat.adres = (*it).adres;
                 edytowanyAdresat.numerTelefonu = (*it).numerTelefonu;
+                zmiana = true;
                 break;
             case 2:
                 cout << "Podaj nowe nazwisko" << endl;
@@ -592,6 +597,7 @@ void edytujAdresata(vector<Adresat> &adresaci,int iloscOsob)
                 edytowanyAdresat.email = (*it).email;
                 edytowanyAdresat.adres = (*it).adres;
                 edytowanyAdresat.numerTelefonu = (*it).numerTelefonu;
+                zmiana = true;
                 break;
             case 3:
                 cout << "Podaj nowy numer telefonu" << endl;
@@ -603,6 +609,7 @@ void edytujAdresata(vector<Adresat> &adresaci,int iloscOsob)
                 edytowanyAdresat.email = (*it).email;
                 edytowanyAdresat.adres = (*it).adres;
                 edytowanyAdresat.numerTelefonu = numerTelefonu;
+                zmiana = true;
                 break;
             case 4:
                 cout << "Podaj nowy email" << endl;
@@ -614,6 +621,7 @@ void edytujAdresata(vector<Adresat> &adresaci,int iloscOsob)
                 edytowanyAdresat.email = email;
                 edytowanyAdresat.adres = (*it).adres;
                 edytowanyAdresat.numerTelefonu = (*it).numerTelefonu;
+                zmiana = true;
                 break;
             case 5:
                 cout << "Podaj nowy adres" << endl;
@@ -625,14 +633,23 @@ void edytujAdresata(vector<Adresat> &adresaci,int iloscOsob)
                 edytowanyAdresat.email = (*it).email;
                 edytowanyAdresat.adres = adres;
                 edytowanyAdresat.numerTelefonu = (*it).numerTelefonu;
+                zmiana = true;
                 break;
             }
-
-            aktualizacjaPliku("Adresaci.txt",id,edytowanyAdresat,iloscOsob);
-
-            cout << "Osoba zostala edytowana." << endl;
-            Sleep(1000);
         }
+    if (zmiana)
+    {
+        aktualizacjaPliku("Adresaci.txt",id,edytowanyAdresat,iloscOsob);
+
+        cout << "Osoba zostala edytowana." << endl;
+        Sleep(1000);
+
+    }
+    else
+    {
+        cout << "Adresat nie nalezy do zalogownego uzytkownika lub nie ma osoby o podanym id" << endl;
+        Sleep(2000);
+    }
 
 }
 
